@@ -29,4 +29,6 @@ The below files are only used when being run by GitHub actions.
 
 # Local Development
 
-From the 'front' directory run `npm run dev`, configured in `front/package.json`. This creates a full development build and then stays running. Locally saved changes will output files to `/back/wwwroot` as specified in `front/vue.config.js` which can then be served as usual from the .Net dev build.
+From the 'front' directory run `npm run dev`, configured in `/front/package.json`. This creates a full development build and then stays running. Locally saved changes will output files to `/back/wwwroot` as specified in `/front/vue.config.js` which can then be served as usual from the .Net dev build.
+
+This compound configuration is specified as "Server/Client" in launch.json.
