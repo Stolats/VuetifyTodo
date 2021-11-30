@@ -11,7 +11,6 @@ using Microsoft.Extensions.Hosting;
 
 using Microsoft.EntityFrameworkCore;
 
-// File must be given name of the namespace??
 using TodoApi.Models;
 
 namespace back

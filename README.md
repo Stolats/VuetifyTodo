@@ -1,13 +1,16 @@
 # Vuetify Todo 
 
+A simple to-do web app deployed to AWS Lambda via github actions, the live version can be found [here](https://2jhl9zb0o6.execute-api.us-east-2.amazonaws.com/Prod/).
+
+Note: The app currently uses runtime memory and is not persistent, due to the nature of the lambda instance only being run on request, lists will be lost after a period of inactivity. There is also currently only a single to-do list exposed, shared by any users at that time.
+
 ## Front end
 
-The front end was adapted to use Vue.js with Vuetify components.
+The front end was adapted to use Vue.js 2 with Vuetify components.
 
 ## Back end
 
 The back end was built starting from a .Net Core web API tutorial found [here](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-5.0&tabs=visual-studio-code).
-It uses an MVC design pattern.
 
 ## CI
 The below files are only used when being run by GitHub actions.

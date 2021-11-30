@@ -3,10 +3,10 @@
     <v-form action="javascript:void(0);">
         <v-row>
             <v-col>
-                <v-text-field  label="New to-do" v-model="name"></v-text-field>
+                <v-text-field  label="New to-do" v-model="name" v-on:keyup.enter="addItem(name)" ></v-text-field>
             </v-col>
             <v-col cols="auto">
-                <v-btn
+                <v-btn 
                 elevation="2"
                 @click="addItem(name)"
                 >Add</v-btn>

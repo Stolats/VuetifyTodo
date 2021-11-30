@@ -1,7 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
 
-// File must be given name of the namespace??
 namespace TodoApi.Models
 {
     public class TodoItem
