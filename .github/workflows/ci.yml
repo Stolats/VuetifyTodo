@@ -20,6 +20,9 @@ jobs:
       - name: install lambda tools
         run: dotnet tool install -g Amazon.Lambda.Tools
 
+      - name: install vue cli
+        run: npm install -g @vue/cli
+        
       - name: build web files
         run: npm run build
         working-directory: ./front
