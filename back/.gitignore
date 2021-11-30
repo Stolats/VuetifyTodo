@@ -457,3 +457,5 @@ $RECYCLE.BIN/
 
 # generated files from vue build
 /wwwroot/js/*
+/wwwroot/css/*
+/wwwroot/*
