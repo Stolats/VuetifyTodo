@@ -1,50 +1,56 @@
 <template>
     <v-app>
         <v-main>
-            <v-container>
-                <v-row>
-                    <v-col>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <new-item v-on:getItems="getItems"> </new-item>
-                    </v-col>
-                </v-row>
-                <v-row >
-                    <v-col>
-                        <edit-form :todo="editTodo" :display="displayEdit" v-on:hideEditForm="hideEditForm" v-on:getItems="getItems"></edit-form>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <div value="body-1">
-                            Counter: {{ counter }}
-                        </div>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <v-simple-table>
-                            <thead>
-                                <tr>
-                                    <th style="width:10%;" >Is Complete?</th>
-                                    <th>Name</th>
-                                    <th style="width:10%;"></th>
-                                    <th style="width:10%;"></th>
-                                </tr>
-                            </thead>
-                            <tbody >
-                                <tr v-on:displayEditForm="displayEditForm" v-on:deleteItem="deleteItem" is="todo-item"
-                                    v-for="item in todos"
-                                    v-bind:todo="item"
-                                    v-bind:key="item.id"
-                                ></tr>
-                            </tbody>
-                        </v-simple-table>
-                    </v-col>
-                </v-row>
-            </v-container>
+            <v-card>
+                <v-container>
+                    
+                    <v-row>
+                        <v-col>
+                            <p>
+                                Note: The app currently uses runtime memory and is not persistent, connecting to a database is planned. Due to the nature of the lambda instance only being run on request, lists will be lost after a period of inactivity. There is also currently only a single to-do list exposed, shared by any users at that time.
+                            </p>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <new-item v-on:getItems="getItems"> </new-item>
+                        </v-col>
+                    </v-row>
+                    <v-row >
+                        <v-col>
+                            <edit-form :todo="editTodo" :display="displayEdit" v-on:hideEditForm="hideEditForm" v-on:getItems="getItems"></edit-form>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <div value="body-1">
+                                Counter: {{ counter }}
+                            </div>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-simple-table>
+                                <thead>
+                                    <tr>
+                                        <th style="width:10%;" >Is Complete?</th>
+                                        <th>Name</th>
+                                        <th style="width:10%;"></th>
+                                        <th style="width:10%;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <tr v-on:displayEditForm="displayEditForm" v-on:deleteItem="deleteItem" is="todo-item"
+                                        v-for="item in todos"
+                                        v-bind:todo="item"
+                                        v-bind:key="item.id"
+                                    ></tr>
+                                </tbody>
+                            </v-simple-table>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-card>
         </v-main>
     </v-app>
 </template>

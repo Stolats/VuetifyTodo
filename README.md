@@ -1,8 +1,8 @@
 # Vuetify Todo 
 
-A simple to-do web app deployed to AWS Lambda via github actions, the live version can be found [here](https://2jhl9zb0o6.execute-api.us-east-2.amazonaws.com/Prod/).
+A simple to-do web app deployed to AWS Lambda via GitHub actions, the live version can be found [here](https://2jhl9zb0o6.execute-api.us-east-2.amazonaws.com/Prod/).
 
-Note: The app currently uses runtime memory and is not persistent, due to the nature of the lambda instance only being run on request, lists will be lost after a period of inactivity. There is also currently only a single to-do list exposed, shared by any users at that time.
+Note: The app currently uses runtime memory and is not persistent, connecting to a database is planned. Due to the nature of the lambda instance only being run on request, lists will be lost after a period of inactivity. There is also currently only a single to-do list exposed, shared by any users at that time.
 
 ## Front end
 
