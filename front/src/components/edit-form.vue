@@ -2,7 +2,7 @@
 <template>
         <v-row>
             <v-col>
-                <v-form id="editForm" v-if="display">
+                <v-form @submit.prevent="updateItem(todo)" id="editForm" v-if="display">
                     <v-row>
                         <v-col cols="auto">
                             <h3>Edit</h3>
@@ -16,7 +16,7 @@
                             <v-checkbox v-model="todo.isComplete"></v-checkbox>
                         </v-col>
                         <v-col>
-                            <v-text-field  label="" v-model="todo.name"></v-text-field>
+                            <v-text-field ref="name" label="" v-model="todo.name"  ></v-text-field>
                         </v-col>
                         <v-col cols="auto">
                             <v-btn
@@ -64,6 +64,15 @@
             this.$emit('hideEditForm', todo)
 
             return false;
+        }
+
+    },
+    updated() {
+        // https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/Vue_refs_focus_management#virtual_dom_and_refs
+        // TODO: edit component should be created & destroyed on each open -> use mounted instead
+        if(this.$refs.name){
+            const labelInputRef = this.$refs.name;
+            labelInputRef.focus();
         }
     }
   }

@@ -27,10 +27,22 @@ namespace back
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Adding middleware for session variables
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             // DB context service must be registered with the DI (dependency injection) container. The container
             // provides the service to controllers.
-            services.AddDbContext<TodoContext>(opt =>
+            services.AddDbContext<DatabaseContext>(opt =>
                                                opt.UseInMemoryDatabase("TodoList"));
+
+            // services.AddSingleton<InMemoryListManager>();
 
             services.AddControllers();
         }
@@ -55,6 +67,8 @@ namespace back
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

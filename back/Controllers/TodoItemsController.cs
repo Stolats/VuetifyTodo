@@ -13,25 +13,43 @@ namespace TodoApi.Controllers
     [ApiController]
     public class TodoItemsController : ControllerBase
     {
-        private readonly TodoContext _context;
+        private readonly DatabaseContext _dbContext;
+        // private readonly InMemoryListManager _inMemLists;
 
-        public TodoItemsController(TodoContext context)
+        public TodoItemsController(DatabaseContext dbContext)
         {
-            _context = context;
+            _dbContext = dbContext;
+            // _inMemLists = inMemLists;
         }
+
+        // GET: api/TodoItems
+        // [HttpGet]InMemoryListManager
+        //     HttpContext.Session.SetString("_test", "test");
+        //     return await _dbContext.TodoItems
+        //         .Where(x => x.SessionId == HttpContext.Session.Id)
+        //         .Select(x => ItemToDTO(x))
+        //         .ToListAsync();
+        // }
 
         // GET: api/TodoItems
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItemDTO>>> GetTodoItems()
         {
-            return await _context.TodoItems.Select(x => ItemToDTO(x)).ToListAsync();
+            SetPlaceholderCookie();
+            return await _dbContext.TodoItems
+                .Where(x => x.SessionId == HttpContext.Session.Id)
+                .Select(x => ItemToDTO(x))
+                .ToListAsync();
         }
 
         // GET: api/TodoItems/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoItemDTO>> GetTodoItem(long id)
         {
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            SetPlaceholderCookie();
+            var todoItem = await _dbContext.TodoItems
+                .Where(x => x.SessionId == HttpContext.Session.Id)
+                .FirstAsync(x => x.Id == id);
 
             if (todoItem == null)
             {
@@ -46,13 +64,17 @@ namespace TodoApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTodoItem(long id, TodoItemDTO todoItemDTO)
         {
+            SetPlaceholderCookie();
             if (id != todoItemDTO.Id)
             {
                 return BadRequest();
             }
 
             // _context.Entry(todoItem).State = EntityState.Modified;
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            var todoItem = await _dbContext.TodoItems
+                .Where(x => x.SessionId == HttpContext.Session.Id)
+                .FirstAsync(x => x.Id == id);
+
             if (todoItem == null)
             {
                 return NotFound();
@@ -63,7 +85,7 @@ namespace TodoApi.Controllers
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -85,14 +107,16 @@ namespace TodoApi.Controllers
         [HttpPost]
         public async Task<ActionResult<TodoItemDTO>> PostTodoItem(TodoItemDTO todoItemDTO)
         {
+            SetPlaceholderCookie();
             var todoItem = new TodoItem
             {
+                SessionId = HttpContext.Session.Id,
                 IsComplete = todoItemDTO.IsComplete,
                 Name = todoItemDTO.Name
             };
 
-            _context.TodoItems.Add(todoItem);
-            await _context.SaveChangesAsync();
+            _dbContext.TodoItems.Add(todoItem);
+            await _dbContext.SaveChangesAsync();
 
             //return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
             return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, ItemToDTO(todoItem));
@@ -102,21 +126,24 @@ namespace TodoApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodoItem(long id)
         {
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            SetPlaceholderCookie();
+            var todoItem = await _dbContext.TodoItems
+                .Where(x => x.SessionId == HttpContext.Session.Id)
+                .FirstAsync(x => x.Id == id);
             if (todoItem == null)
             {
                 return NotFound();
             }
 
-            _context.TodoItems.Remove(todoItem);
-            await _context.SaveChangesAsync();
+            _dbContext.TodoItems.Remove(todoItem);
+            await _dbContext.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool TodoItemExists(long id)
         {
-            return _context.TodoItems.Any(e => e.Id == id);
+            return _dbContext.TodoItems.Any(e => e.Id == id);
         }
 
         private static TodoItemDTO ItemToDTO(TodoItem todoItem) =>
@@ -126,5 +153,14 @@ namespace TodoApi.Controllers
                 Name = todoItem.Name,
                 IsComplete = todoItem.IsComplete
             };
+
+        private void SetPlaceholderCookie()
+        {
+            // Sessions require a value to be set in order to be persisted across requests. 
+            // Identifying user data via session id's in this way is not a typical use case but for testing purposes, we will set a placeholder cookie to do so.
+            // Docs on persisting sessions: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state?view=aspnetcore-6.0#session-state
+            HttpContext.Session.SetString("_placeholder", "placeholder");
+            return;
+        }
     }
 }
