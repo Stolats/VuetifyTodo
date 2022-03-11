@@ -49,7 +49,7 @@
     "compounds": [
         {
           "name": "Server/Client",
-          "configurations": ["Server .NET Core Launch (web)", "Client Launch via NPM"],
+          "configurations": ["Client Launch via NPM", "Server .NET Core Launch (web)"],
         //   "preLaunchTask": "${defaultBuildTask}"
         }
       ]

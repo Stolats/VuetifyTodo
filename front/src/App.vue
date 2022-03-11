@@ -7,7 +7,7 @@
                     <v-row>
                         <v-col>
                             <p>
-                                Note: The app currently uses runtime memory and is not persistent, connecting to a database is planned. Due to the nature of the lambda instance only being run on request, lists will be lost after a period of inactivity. There is also currently only a single to-do list exposed, shared by any users at that time.
+                                Note: The app currently uses runtime memory and is not persistent, connecting to a database is planned. Lists are personalised using session variables.
                             </p>
                         </v-col>
                     </v-row>
