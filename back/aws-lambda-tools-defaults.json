@@ -15,5 +15,5 @@
     "s3-prefix"     : "back/",
     "template"      : "serverless.template",
     "template-parameters" : "",
-    "docker-host-build-output-dir" : "./bin/Release/net5.0/linux-x64/publish"
+    "docker-host-build-output-dir" : "./bin/Release/net6.0/linux-x64/publish"
   }
